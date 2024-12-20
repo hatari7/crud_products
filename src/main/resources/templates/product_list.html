@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #AFEEEE;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            border-color: #003366;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #c82333;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background-color: #191970;
+            color: white;
+        }
+
+        td, th {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            padding-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ใช้ Tailwind CSS สำหรับจัดขนาดและรูปแบบของข้อความ -->
+    <h1 class="text-4xl font-bold text-center uppercase my-4">Products List</h1>
+
+    <a class="btn btn-primary mb-3" href="/products/create">Create Product</a>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Product Line</th>
+            <th>Vendor</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p: ${products}">
+            <td th:text="${p.ProductCode}"></td>
+            <td th:text="${p.productName}"></td>
+            <td th:text="${p.productLine.productLine}"></td>
+            <td th:text="${p.productVendor}"></td>
+            <td th:text="${p.quantityInStock}"></td>
+            <td th:text="${p.buyPrice}"></td>
+
+            <td class="flex justify-center gap-3">
+                <a class="btn btn-primary btn-sm"
+                   th:href="@{'/products/update?productCode='+${p.productCode}}">Edit</a>
+                <form action="/products/delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${p.productCode}">
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
